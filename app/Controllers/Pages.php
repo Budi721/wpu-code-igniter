@@ -7,13 +7,10 @@ class Pages extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Belajar Code Igniter',
-            'tes' => ['satu', 'dua', 'tiga']
+            'title' => 'Belajar Code Igniter'
         ];
 
-        echo view('layout/header', $data);
-        echo view('pages/home');
-        echo view('layout/footer');
+        return view('pages/home', $data);
     }
 
     public function about()
@@ -22,8 +19,27 @@ class Pages extends BaseController
             'title' => 'About Me'
         ];
 
-        echo view('layout/header', $data);
-        echo view('pages/about');
-        echo view('layout/footer');
+        return view('pages/about', $data);
+    }
+
+    public function contact()
+    {
+        $data = [
+            'title' => 'Contact Us',
+            'alamat' => [
+                [
+                    'tipe' => 'Rumah',
+                    'alamat' => 'Jl Kecap No 198',
+                    'kota' => 'Bandung'
+                ],
+                [
+                    'tipe' => 'Kantor',
+                    'alamat' => 'Jl Pattimura',
+                    'kota' => 'Bandung'
+                ]
+            ]
+        ];
+
+        return view('pages/contact', $data);
     }
 }

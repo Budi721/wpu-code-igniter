@@ -1,8 +1,11 @@
+<?php echo $this->extend('layout/template');?>
+
+<?php echo $this->section('content');?>
 <div class="container">
-    <div class="col">
-        <div class="row">
+    <div class="row">
+        <div class="col">
             <h1>Hello, world!</h1>
-            <?php echo d($tes);?>
         </div>
     </div>
 </div>
+<?php echo $this->endSection();?>
