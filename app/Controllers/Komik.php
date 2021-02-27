@@ -8,6 +8,7 @@ use CodeIgniter\Database\Config;
 class Komik extends BaseController
 {
     protected $komikModel;
+
     public function __construct()
     {
         $this->KomikModel = new KomikModel();
@@ -16,11 +17,11 @@ class Komik extends BaseController
     public function index()
     {
 
-        $komik = $this->KomikModel->findAll();
+        // $komik = $this->KomikModel->findAll();
 
         $data = [
             'title' => 'Daftar Komik',
-            'komik' => $komik
+            'komik' => $this->KomikModel->getKomik()
         ];
 
         // Cara Konek DB tanpa Model
@@ -31,5 +32,15 @@ class Komik extends BaseController
         // }
 
         return view('komik/index', $data);
+    }
+
+    public function detail($slug)
+    {
+        $data = [
+            'title' => 'Detail Komik',
+            'komik' => $this->KomikModel->getKomik($slug)
+        ];
+
+        return view('komik/detail', $data);
     }
 }
