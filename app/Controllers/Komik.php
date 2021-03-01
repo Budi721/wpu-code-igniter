@@ -43,7 +43,7 @@ class Komik extends BaseController
         ];
 
         // Jika komik tidak ada di tabel
-        if (empty($data['komik'])){
+        if (empty($data['komik'])) {
             throw new PageNotFoundException("Judul komik $slug tidak ditemukan.");
         }
 
@@ -53,7 +53,8 @@ class Komik extends BaseController
     public function create()
     {
         $data = [
-            'title' => 'Tambah Data Komik'
+            'title' => 'Tambah Data Komik',
+            'validation' => \Config\Services::validation()
         ];
 
         return view('/komik/create', $data);
@@ -61,15 +62,28 @@ class Komik extends BaseController
 
     public function save()
     {
+        if (!$this->validate([
+            'judul' => [
+                'rules' => 'required|is_unique[komik.judul]',
+                'errors' => [
+                    'required' => '{field} komik harus diisi',
+                    'is_unique' => '{field} komik sudah terdaftar'
+                ]
+            ]
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->to('/komik/create')->withInput()->with('validation', $validation);
+        }
+
         // dd($this->request->getVar());
         $slug = url_title($this->request->getVar('judul'), '-', true);
 
         $this->KomikModel->save([
-           'judul' => $this->request->getVar('judul'),
-           'slug' => $slug,
-           'penulis' => $this->request->getVar('penulis'),
-           'penerbit' => $this->request->getVar('penerbit'),
-           'sampul' => $this->request->getVar('sampul')
+            'judul' => $this->request->getVar('judul'),
+            'slug' => $slug,
+            'penulis' => $this->request->getVar('penulis'),
+            'penerbit' => $this->request->getVar('penerbit'),
+            'sampul' => $this->request->getVar('sampul')
         ]);
 
         session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
