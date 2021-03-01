@@ -5,7 +5,14 @@
 <div class="container">
     <div class="row">
         <div class="col">
+            <a href="/komik/create" class="btn btn-primary mt-3">Tambah Data Komik</a>
             <h1>Daftar Komik</h1>
+            <?php if(session()->getFlashdata('pesan')):?>
+                <div class="alert alert-success" role="alert">
+                    <?php echo session()->getFlashdata('pesan');?>
+                </div>
+            <?php endif;?>
+
             <table class="table">
                 <thead>
                 <tr>
