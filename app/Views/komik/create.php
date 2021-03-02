@@ -7,7 +7,7 @@
         <div class="col-8">
             <h2 class="my-3">Form Tambah Data Komik</h2>
 
-            <form action="/komik/save" method="post">
+            <form action="/komik/save" method="post" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="row mb-3">
                     <label for="judul"
@@ -35,11 +35,14 @@
                                value="<?php echo old('penerbit'); ?>">
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="sampul" class="col-sm-2 col-form-label">Sampul</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="sampul" id="sampul"
-                               value="<?php echo old('sampul'); ?>">
+                <div class="mb-3">
+                    <label for="sampul" class="form-label">Sampul</label>
+                    <div class="col-sm-2">
+                        <img src="/img/default.jpg" class="img-thumbnail img-preview mb-2">
+                    </div>
+                    <input onchange="previewImg()" class="form-control <?php echo ($validation->hasError('sampul')) ? 'is-invalid' : ''; ?>" type="file" id="sampul" name="sampul">
+                    <div class="invalid-feedback">
+                        <?php echo $validation->getError('sampul'); ?>
                     </div>
                 </div>
 
